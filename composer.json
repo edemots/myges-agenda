@@ -1,0 +1,10 @@
+{
+    "name": "edemots/myges-agenda",
+    "authors": [
+        {
+            "name": "Eliot Demots",
+            "email": "eliot@demots.fr"
+        }
+    ],
+    "require": {}
+}

@@ -1,0 +1,40 @@
+version: "3.3"
+
+services:
+  nginx:
+    image: nginx
+    restart: always
+    volumes:
+      - .:/var/www/html
+      - ./.docker/conf/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 80:80
+    depends_on:
+      - php-fpm
+      - postgres
+
+  php-fpm:
+    build: .docker
+    restart: always
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - postgres
+
+  composer:
+    image: composer
+    volumes:
+      - ./src:/app
+    command: install
+
+  postgres:
+    image: postgres:alpine
+    restart: always
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_SECRET}
+    ports:
+      - 5432:5432
+    volumes:
+      - ./.docker/conf/postgres:/var/lib/postgresql/data/
