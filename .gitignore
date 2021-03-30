@@ -1,0 +1,4 @@
+.env
+.docker
+/vendor/
+**/.DS_Store
